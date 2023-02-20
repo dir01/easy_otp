@@ -58,7 +58,6 @@ otp_qr_setup() {
     return 1
   fi
   SEEKREET="$(docker run -it -v "$(realpath $1):/image.png" easy_totp python3 /decode_qr.py)"
-  SEEKREET="$(echo $SEEKREET | tr -d '\r' | tr -d '\n')"
   security delete-generic-password -a $LOGNAME -s $2
   security add-generic-password -a $LOGNAME -s $2 -w $SEEKREET
   CURRENT_CODE=$(otp_print $2)

@@ -9,7 +9,7 @@ RUN go install github.com/dim13/otpauth@v0.5.0
 
 RUN cat <<EOF > /decode_qr.py
 
-import urllib, pyzbar.pyzbar, subprocess
+import urllib, pyzbar.pyzbar, subprocess, sys
 from PIL import Image
 img = Image.open('/image.png')
 for d in pyzbar.pyzbar.decode(img):
@@ -20,15 +20,15 @@ for d in pyzbar.pyzbar.decode(img):
         parsed = urllib.parse.urlparse(url)
     secret = urllib.parse.parse_qs(parsed.query)['secret'][0]
     secret = ''.join(c for c in secret if c.isalnum())
-    print(secret)
+    sys.stdout.write(secret)
 
 EOF
 
 
 RUN cat <<EOF > /print_otp.py
 
-import pyotp, os
+import pyotp, os, sys
 totp = pyotp.TOTP(os.environ['SEEKREET'].strip())
-print(totp.now())
+sys.stdout.write(totp.now())
 
 EOF
