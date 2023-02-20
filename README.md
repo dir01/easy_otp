@@ -1,4 +1,4 @@
-# easy_totp
+# easy_otp
 **Run one command and have OTP copied to your clipboard**
 
 *Assuming you use Mac and have Docker installed*
@@ -48,7 +48,7 @@ $ cat Dockerfile
 ```
 3. Build the docker image:
 ```shell
-$ docker build . -t easy_totp
+$ docker build . -t easy_otp
 ```
 4. Add these 2 functions to your .bashrc/.zshrc:
 ```bash
@@ -57,7 +57,7 @@ otp_qr_setup() {
     echo "Usage: otp_qr_setup /path/to/image.png my-secret-name"
     return 1
   fi
-  SEEKREET="$(docker run -it -v "$(realpath $1):/image.png" easy_totp python3 /decode_qr.py)"
+  SEEKREET="$(docker run -it -v "$(realpath $1):/image.png" easy_otp python3 /decode_qr.py)"
   security delete-generic-password -a $LOGNAME -s $2
   security add-generic-password -a $LOGNAME -s $2 -w $SEEKREET
   CURRENT_CODE=$(otp_print $2)
@@ -67,6 +67,6 @@ otp_qr_setup() {
 }
 
 otp_print() {
-  SEEKREET="$(security find-generic-password -w -a $LOGNAME -s "$1")" docker run -it --env SEEKREET easy_totp python3 /print_otp.py
+  SEEKREET="$(security find-generic-password -w -a $LOGNAME -s "$1")" docker run -it --env SEEKREET easy_otp python3 /print_otp.py
 }
 ```
