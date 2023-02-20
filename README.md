@@ -40,7 +40,7 @@ Also, don't forget to:
 ## Installation 
 1. Clone and open this repo:
 ```shell
-$ git clone https://github.com/dir01/easy_totp.git && cd easy_totp
+$ git clone https://github.com/dir01/easy_otp.git && cd easy_otp
 ```
 2. Inspect the Dockerfile to make sure it's not doing anything malicious
 ```shell
